@@ -24,10 +24,9 @@ passport.use(
 const JWTStategy = require("passport-jwt").Strategy;
 const ExtractJWT = require("passport-jwt").ExtractJwt;
 
-const auth = ExtractJWT.fromAuthHeaderAsBearerToken();
-
 const options = {
-  jwtFromRequest: jwtExtractor,
+  // jwtFromRequest: jwtExtractor,
+  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
   secretOrKey: process.env.JWT_SECRET,
 };
 

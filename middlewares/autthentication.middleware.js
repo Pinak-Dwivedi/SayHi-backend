@@ -2,6 +2,7 @@ const passport = require("passport");
 
 exports.checkAuthenticated = (req, res, next) => {
   passportJwtAuthenticate(req, res, next, (error, user, info) => {
+    // console.log(req);
     if (user) {
       req.user = user;
       return next();
