@@ -7,11 +7,13 @@ app.use(express.json());
 // cors
 const cors = require("cors");
 
-app.use(
-  cors({
-    origin: [process.env.FRONTEND_URL],
-  })
-);
+app.use(cors());
+
+// app.use(
+//   cors({
+//     origin: [process.env.FRONTEND_URL],
+//   })
+// );
 
 // cookie-parser
 const cookieParser = require("cookie-parser");
@@ -40,7 +42,7 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 3000;
 
 const appServer = app.listen(PORT, () => {
-  // console.log("Server is listening on port " + PORT)
+  // console.log("Server is listening on port " + PORT);
 });
 
 module.exports = appServer;

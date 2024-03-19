@@ -16,11 +16,13 @@ const {
   CONNECT_ERROR,
 } = require("./utils/socketEvents");
 
-const io = new Server(appServer, {
-  cors: {
-    origin: [process.env.FRONTEND_URL],
-  },
-});
+// const io = new Server(appServer, {
+//   cors: {
+//     origin: [process.env.FRONTEND_URL],
+//   },
+// });
+
+const io = new Server(appServer);
 
 // authentication middleware
 io.engine.use((req, res, next) => {
