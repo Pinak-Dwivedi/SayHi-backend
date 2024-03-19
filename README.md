@@ -3,7 +3,7 @@
 ## Intro
 
 Hello! I am Pinak Dwivedi. 
-I have created this android application with React-Native, Expo, Expo-Router, Typescript, TailwindCSS, Redux, React-Query, Node, Express and MongoDB, Socket.io.
+I have created this android chat application with React-Native, Expo, Expo-Router, Typescript, TailwindCSS, Redux, React-Query, Node, Express and MongoDB, Socket.io.
 
 ## About This Repo
 
@@ -18,5 +18,7 @@ This Repo is the backend part of the app named SayHi and frontend of this is at 
 ## Service Is LIVE At
 
 https://sayhi-backend.onrender.com
+
+### So... SayHi to your friends....!
 
 ### It was a fun project.!
