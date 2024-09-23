@@ -17,7 +17,7 @@ This Repo is the backend part of the app named SayHi and frontend of this is at 
 
 ## Service Is LIVE At
 
-https://sayhi-backend.onrender.com
+https://expo.dev/artifacts/eas/nQwvXzvyvkJinfyD7PaocV.apk
 
 ### So... SayHi to your friends....!
 
