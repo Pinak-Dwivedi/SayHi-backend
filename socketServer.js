@@ -26,12 +26,23 @@ const io = new Server(appServer);
 
 // authentication middleware
 io.engine.use((req, res, next) => {
-  passport.authenticate("jwt", { session: false }, (error, user, info) => {
-    if (user) {
-      return next();
-    }
-    return next(new Error("Not Authenticated!"));
-  })(req, res, next);
+  // console.log("authentication middleware");
+
+  const isHandshake = req._query.sid === undefined;
+
+  if (isHandshake) {
+    // console.log("handshake");
+
+    passport.authenticate("jwt", { session: false }, (error, user, info) => {
+      if (user) {
+        // console.log("user authenticated");
+        return next();
+      }
+      return next(new Error("Not Authenticated!"));
+    })(req, res, next);
+  } else {
+    next();
+  }
 });
 
 // users connected with socket
@@ -48,9 +59,9 @@ io.on(CONNECTION, (socket) => {
 
   // add user
   socket.on(ADD_USER, (userData, cb) => {
-    // check if this user does not already exist
     // console.log("add user");
-    // console.log(userData);
+
+    // check if this user does not already exist
 
     if (users.some((user) => user?.username === userData?.username)) {
       users = users.filter((user) => user?.username !== userData?.username);
@@ -67,8 +78,8 @@ io.on(CONNECTION, (socket) => {
         socketId: socket.id,
       });
     }
-    // console.log(socket.id);
-    // console.log(users);
+
+    // console.log("users", users);
 
     if (typeof cb === "function") cb();
   });
@@ -107,6 +118,8 @@ io.on(CONNECTION, (socket) => {
     users = users.filter((user) => user.socketId !== socket.id);
 
     // console.log("User disconnected!");
+
+    // console.log(users);
   });
 });
 
@@ -151,12 +164,7 @@ async function onSendMessage(io, socket, messageData) {
     $or: [{ username: senderUsername }, { username: receiverUsername }],
   });
 
-  if (
-    senderAndReceiver == null ||
-    !senderAndReceiver?.length ||
-    senderAndReceiver?.length < 2
-  )
-    return;
+  if (senderAndReceiver == null || senderAndReceiver?.length < 2) return;
 
   const sender = senderAndReceiver.find(
     (user) => user?.username === senderUsername
@@ -175,10 +183,15 @@ async function onSendMessage(io, socket, messageData) {
 
   if (message == null) return;
 
+  // console.log("users", users);
+
   // check if reciver is live
-  const receiverSocket = users.find(
-    (user) => user?.userId === receiver._id.valueOf()
-  );
+  const receiverSocket = users.find((user) => {
+    // console.log("userId", user.userId);
+    // console.log("_id", receiver._id.valueOf);
+
+    return user?.userId === receiver._id.valueOf();
+  });
 
   const receiveMessageData = {
     id: message?._id?.valueOf(),
@@ -186,6 +199,8 @@ async function onSendMessage(io, socket, messageData) {
     sender: message?.sender?.valueOf(),
     reciever: message?.receiver?.valueOf(),
   };
+
+  // console.log("receiver socket", receiverSocket);
 
   if (receiverSocket == null) {
     // only to sender

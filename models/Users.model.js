@@ -54,6 +54,7 @@ UserSchema.virtual("userInfo").get(function () {
     username: this.username,
     email: this.email,
     profileImage: this.profileImage,
+    googleId: this.googleId != null ? this.googleId : undefined,
     role: this.role === "admin" ? "admin" : undefined,
   };
 });

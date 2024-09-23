@@ -2,7 +2,7 @@ const cloudinary = require("cloudinary").v2;
 
 exports.uploadImage = async function (imageFile) {
   try {
-    if (typeof imageFile !== "string" || imageFile.trim() === "")
+    if (typeof imageFile !== "string" || imageFile?.trim() === "")
       return "Image data is inappropriate";
 
     const fileMimeType = imageFile.substring(5, imageFile.indexOf(";"));

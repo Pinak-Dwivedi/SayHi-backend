@@ -152,7 +152,7 @@ class UsersController {
       username: username,
       email: email,
       profileImage: profilePicture,
-      // password is option in model
+      // password is optional in model
     });
 
     const token = createJwtToken({
@@ -231,7 +231,7 @@ class UsersController {
       if (imageUploadResult === "Image data is inappropriate")
         return next(CustomError(400, "Errors in received data"));
 
-      if (imageUploadResult === "Wrong image format")
+      if (imageUploadResult === "Wrong image format") {
         return res.status(400).json({
           success: false,
           message: "Errors in received data!",
@@ -239,12 +239,14 @@ class UsersController {
             profileImage: "Image format must be png|jpg|jpeg",
           },
         });
+      }
 
       if (
         imageUploadResult === "Image upload failed" ||
         imageUploadResult?.public_id == null
-      )
+      ) {
         throw new CustomError();
+      }
 
       // check if user already has a profile image and that too associated with cloudinary not google
       if (user?.profileImage != null && user?.profileImagePublicId != null) {
@@ -434,7 +436,7 @@ class UsersController {
 
     return res.status(200).json({
       success: true,
-      messaage: "Friend added successfully!",
+      message: "Friend added successfully!",
     });
   });
 

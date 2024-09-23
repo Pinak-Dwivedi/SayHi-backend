@@ -21,8 +21,9 @@ passport.use(
   })
 );
 
-const JWTStategy = require("passport-jwt").Strategy;
-const ExtractJWT = require("passport-jwt").ExtractJwt;
+const passportJWT = require("passport-jwt");
+const JWTStategy = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
 
 const options = {
   // jwtFromRequest: jwtExtractor,
